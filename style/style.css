@@ -1,0 +1,26 @@
+.signUpForm {
+  width: 50%;
+  min-width: 250px;
+  margin: 10px auto;
+}
+
+.signUpForm .photoDiv img {
+  width: 250px;
+}
+
+.signUpForm button {
+  margin: 10px auto;
+}
+
+.signUpForm .nextOfKin {
+  -webkit-transition: 1s;
+  transition: 1s;
+}
+
+.hidden {
+  -webkit-transition: 1s;
+  transition: 1s;
+  height: 1px;
+  overflow: hidden;
+}
+/*# sourceMappingURL=style.css.map */

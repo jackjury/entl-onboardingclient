@@ -1,0 +1,23 @@
+.signUpForm {
+  width: 50%;
+  min-width: 250px;
+  margin: 10px auto;
+
+  .photoDiv {
+    img {
+      width: 250px;
+    }
+  }
+  button {
+    margin: 10px auto;
+  }
+  .nextOfKin {
+    transition: 1s;
+  }
+}
+
+.hidden {
+  transition: 1s;
+  height: 1px;
+  overflow: hidden;
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pre Register for Site Access</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./style/style.css" />
+  </head>
+  <body>
+    <form class="signUpForm" name="signUpForm">
+      <h3>Your Details</h3>
+      <div class="mb-3">
+        <label for="company" class="form-label">Company</label>
+        <select class="form-select" aria-label="Company Select" id="company">
+          <option disabled selected>Loading...</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="firstName" class="form-label">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="firstName"
+          name="firstName"
+          aria-describedby="firstName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastName"
+          name="lastName"
+          aria-describedby="lastName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="number" class="form-label">Mobile Number</label>
+        <input
+          type="tel"
+          class="form-control"
+          id="number"
+          name="number"
+          aria-describedby="number"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email address</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          aria-describedby="emailHelp"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="medical" class="form-label"
+          >Are there any medical conditions we should be aware of?</label
+        >
+        <textarea
+          class="form-control"
+          placeholder="Please provide details here"
+          id="medical"
+          style="height: 100px"
+        ></textarea>
+      </div>
+      <div class="mb-3 nextOfKin hidden" id="nextOfKin">
+        <h4>Emergency Contact</h4>
+        <p>Please provide us with a contact in case of emergencies</p>
+        <div class="mb-3">
+          <label for="Contactname" class="form-label">Contact Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="Contactname"
+            name="Contactname"
+            aria-describedby="Contactname"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="Contactrel" class="form-label">Relationship</label>
+          <input
+            type="text"
+            class="form-control"
+            id="Contactrel"
+            name="Contactrel"
+            aria-describedby="Contactrel"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="Contactnum1" class="form-label">Contact Number</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="Contactnum1"
+            name="Contactnum1"
+            aria-describedby="Contactnum1"
+          />
+        </div>
+      </div>
+      <div class="mb-3 photo">
+        <h2>Pass Photo</h2>
+        <p>Please upload a photo for use on your site pass</p>
+        <button id="upload_widget" class="btn btn-primary" type="button">
+          Choose Photo
+        </button>
+        <div class="photoDiv" id="photoDiv">
+          <img src="./img/photoplaceholder.png" alt="" />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <script
+      src="https://widget.cloudinary.com/v2.0/global/all.js"
+      type="text/javascript"
+    ></script>
+
+    <script src="./main.js"></script>
+  </body>
+</html>
