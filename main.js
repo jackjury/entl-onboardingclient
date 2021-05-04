@@ -56,9 +56,12 @@ function addThumbnail(url) {
 
 function sumbitForm() {}
 
+let companiesList = [];
+
 async function getCompanies() {
   let response = await fetch(companyEndPoint);
   let companies = await response.json();
+  companiesList = companies;
   companySelect.innerHTML = "";
   let fragment = document.createDocumentFragment();
   let initialOption = document.createElement("option");
@@ -68,7 +71,9 @@ async function getCompanies() {
     let option = document.createElement("option");
     option.innerText = company.companyName;
     option.setAttribute("value", company.companyName);
-    option.setAttribute("enhancedData", company.enhancedData);
+    if (company.enhancedData) {
+      option.setAttribute("enhancedData", "");
+    }
     fragment.appendChild(option);
   });
   companySelect.appendChild(fragment);
@@ -77,7 +82,15 @@ async function getCompanies() {
 getCompanies();
 
 companySelect.addEventListener("change", (e) => {
-  if (e.target.value == "Freelancer") {
+  let hasEnhanced = false;
+  companiesList.find((company, index) => {
+    if (e.target.value == company.companyName) {
+      hasEnhanced = company.enhancedData;
+      return;
+    }
+  });
+
+  if (hasEnhanced) {
     nextOfKin.classList.remove("hidden");
   } else {
     nextOfKin.classList.add("hidden");
