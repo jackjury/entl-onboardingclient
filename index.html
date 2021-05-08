@@ -11,7 +11,9 @@
       integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
       crossorigin="anonymous"
     />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
     <link rel="stylesheet" href="./style/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/joi-browser@13.4.0/dist/joi-browser.min.js"></script>
   </head>
 
   <body>
@@ -33,12 +35,15 @@
       <h3>Your Details</h3>
       <div class="mb-3">
         <label for="company" class="form-label">Company</label>
+        <div><small id="companyError" class="text-danger"></small></div>
+
         <select class="form-select" aria-label="Company Select" id="company">
           <option disabled selected>Loading...</option>
         </select>
       </div>
       <div class="mb-3">
         <label for="firstName" class="form-label">First Name</label>
+        <div><small id="firstNameError" class="text-danger"></small></div>
         <input
           type="text"
           class="form-control"
@@ -49,6 +54,8 @@
       </div>
       <div class="mb-3">
         <label for="lastName" class="form-label">Last Name</label>
+        <div><small id="lastNameError" class="text-danger"></small></div>
+
         <input
           type="text"
           class="form-control"
@@ -59,6 +66,8 @@
       </div>
       <div class="mb-3">
         <label for="number" class="form-label">Mobile Number</label>
+        <div><small id="numberError" class="text-danger"></small></div>
+
         <input
           type="tel"
           class="form-control"
@@ -69,29 +78,27 @@
       </div>
       <div class="mb-3">
         <label for="email" class="form-label">Email address</label>
+        <div><small id="emailError" class="text-danger"></small></div>
+        <div class="alert alert-danger" id="emailInUse" style="display: none">
+          <strong>Sorry!</strong> That email address is allready in use, please
+          use a unique email address
+        </div>
         <input
           type="email"
           class="form-control"
           id="email"
+          name="email"
           aria-describedby="emailHelp"
         />
       </div>
-      <div class="mb-3">
-        <label for="medical" class="form-label"
-          >Are there any medical conditions we should be aware of?</label
-        >
-        <textarea
-          class="form-control"
-          placeholder="Please provide details here"
-          id="medical"
-          style="height: 100px"
-        ></textarea>
-      </div>
+
       <div class="mb-3 nextOfKin hidden" id="nextOfKin">
         <h4>Emergency Contact</h4>
         <p>Please provide us with a contact in case of emergencies</p>
         <div class="mb-3">
           <label for="Contactname" class="form-label">Contact Name</label>
+          <div><small id="ContactnameError" class="text-danger"></small></div>
+
           <input
             type="text"
             class="form-control"
@@ -102,6 +109,8 @@
         </div>
         <div class="mb-3">
           <label for="Contactrel" class="form-label">Relationship</label>
+          <div><small id="ContactnameError" class="text-danger"></small></div>
+
           <input
             type="text"
             class="form-control"
@@ -112,6 +121,8 @@
         </div>
         <div class="mb-3">
           <label for="Contactnum1" class="form-label">Contact Number</label>
+          <div><small id="Contactnum1Error" class="text-danger"></small></div>
+
           <input
             type="tel"
             class="form-control"
@@ -131,7 +142,7 @@
           <img src="./img/photoplaceholder.png" alt="" />
         </div>
       </div>
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button id="submit" type="submit" class="btn btn-primary">Submit</button>
     </form>
 
     <script
