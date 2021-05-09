@@ -2,6 +2,7 @@ header {
   width: 50%;
   min-width: 250px;
   margin: 10px auto;
+  text-align: center;
 }
 
 .signUpForm {

@@ -19,131 +19,164 @@
   <body>
     <header>
       <h2>Register For Site Access</h2>
-      <p>
-        Please enter your details below to pre register for site access.
-        <strong>
-          Your contact details will be used for contact tracing purposes should
-          this be required.
-        </strong>
-      </p>
-      <p>
-        All data will be held in accordance with our privicy policy, which can
-        be found <a href="https://entourage.live/terms-conditions/">here</a>
-      </p>
     </header>
-    <form class="signUpForm" name="signUpForm">
-      <h3>Your Details</h3>
-      <div class="mb-3">
-        <label for="company" class="form-label">Company</label>
-        <div><small id="companyError" class="text-danger"></small></div>
-
-        <select class="form-select" aria-label="Company Select" id="company">
-          <option disabled selected>Loading...</option>
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="firstName" class="form-label">First Name</label>
-        <div><small id="firstNameError" class="text-danger"></small></div>
-        <input
-          type="text"
-          class="form-control"
-          id="firstName"
-          name="firstName"
-          aria-describedby="firstName"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="lastName" class="form-label">Last Name</label>
-        <div><small id="lastNameError" class="text-danger"></small></div>
-
-        <input
-          type="text"
-          class="form-control"
-          id="lastName"
-          name="lastName"
-          aria-describedby="lastName"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="number" class="form-label">Mobile Number</label>
-        <div><small id="numberError" class="text-danger"></small></div>
-
-        <input
-          type="tel"
-          class="form-control"
-          id="number"
-          name="number"
-          aria-describedby="number"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email address</label>
-        <div><small id="emailError" class="text-danger"></small></div>
-        <div class="alert alert-danger" id="emailInUse" style="display: none">
-          <strong>Sorry!</strong> That email address is allready in use, please
-          use a unique email address
+    <main>
+      <div id="successDiv" style="display: none">
+        <div class="alert alert-success" role="alert">
+          <h4 class="alert-heading">Well done!</h4>
+          <p>Thank you for registering. You now need to do X</p>
+          <hr />
+          <p class="mb-0">
+            If you need to register another person, please click below
+          </p>
         </div>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          name="email"
-          aria-describedby="emailHelp"
-        />
+        <button
+          type="button"
+          class="btn btn-primary"
+          onclick="location.reload()"
+        >
+          Register Another Person
+        </button>
       </div>
 
-      <div class="mb-3 nextOfKin hidden" id="nextOfKin">
-        <h4>Emergency Contact</h4>
-        <p>Please provide us with a contact in case of emergencies</p>
+      <form class="signUpForm" name="signUpForm" id="signUpForm">
+        <div class="jumbotron">
+          <p>
+            Please enter your details below to pre register for site access.
+            <strong>
+              Your contact details will be used for contact tracing purposes
+              should this be required.
+            </strong>
+          </p>
+          <p>
+            All data will be held in accordance with our privicy policy, which
+            can be found
+            <a href="https://entourage.live/terms-conditions/">here</a>
+          </p>
+        </div>
+        <h3>Your Details</h3>
+        <div
+          class="alert alert-danger"
+          id="incompleteForm"
+          style="display: none"
+        >
+          <strong>Sorry!</strong> Please make sure all the fields below are
+          filled in, and you have selected a photo.
+        </div>
         <div class="mb-3">
-          <label for="Contactname" class="form-label">Contact Name</label>
-          <div><small id="ContactnameError" class="text-danger"></small></div>
+          <label for="company" class="form-label">Company</label>
+          <div><small id="companyError" class="text-danger"></small></div>
+
+          <select class="form-select" aria-label="Company Select" id="company">
+            <option disabled selected>Loading...</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="firstName" class="form-label">First Name</label>
+          <div><small id="firstNameError" class="text-danger"></small></div>
+          <input
+            type="text"
+            class="form-control"
+            id="firstName"
+            name="firstName"
+            aria-describedby="firstName"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="lastName" class="form-label">Last Name</label>
+          <div><small id="lastNameError" class="text-danger"></small></div>
 
           <input
             type="text"
             class="form-control"
-            id="Contactname"
-            name="Contactname"
-            aria-describedby="Contactname"
+            id="lastName"
+            name="lastName"
+            aria-describedby="lastName"
           />
         </div>
         <div class="mb-3">
-          <label for="Contactrel" class="form-label">Relationship</label>
-          <div><small id="ContactnameError" class="text-danger"></small></div>
-
-          <input
-            type="text"
-            class="form-control"
-            id="Contactrel"
-            name="Contactrel"
-            aria-describedby="Contactrel"
-          />
-        </div>
-        <div class="mb-3">
-          <label for="Contactnum1" class="form-label">Contact Number</label>
-          <div><small id="Contactnum1Error" class="text-danger"></small></div>
+          <label for="number" class="form-label">Mobile Number</label>
+          <div><small id="numberError" class="text-danger"></small></div>
 
           <input
             type="tel"
             class="form-control"
-            id="Contactnum1"
-            name="Contactnum1"
-            aria-describedby="Contactnum1"
+            id="number"
+            name="number"
+            aria-describedby="number"
           />
         </div>
-      </div>
-      <div class="mb-3 photo">
-        <h2>Pass Photo</h2>
-        <p>Please upload a photo for use on your site pass</p>
-        <button id="upload_widget" class="btn btn-primary" type="button">
-          Choose Photo
-        </button>
-        <div class="photoDiv" id="photoDiv">
-          <img src="./img/photoplaceholder.png" alt="" />
+        <div class="mb-3">
+          <label for="email" class="form-label">Email address</label>
+          <div><small id="emailError" class="text-danger"></small></div>
+          <div class="alert alert-danger" id="emailInUse" style="display: none">
+            <strong>Sorry!</strong> That email address is allready in use,
+            please use a unique email address
+          </div>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            aria-describedby="emailHelp"
+          />
         </div>
-      </div>
-      <button id="submit" type="submit" class="btn btn-primary">Submit</button>
-    </form>
+
+        <div class="mb-3 nextOfKin hidden" id="nextOfKin">
+          <h4>Emergency Contact</h4>
+          <p>Please provide us with a contact in case of emergencies</p>
+          <div class="mb-3">
+            <label for="Contactname" class="form-label">Contact Name</label>
+            <div><small id="ContactnameError" class="text-danger"></small></div>
+
+            <input
+              type="text"
+              class="form-control"
+              id="Contactname"
+              name="Contactname"
+              aria-describedby="Contactname"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Contactrel" class="form-label">Relationship</label>
+            <div><small id="ContactrelError" class="text-danger"></small></div>
+
+            <input
+              type="text"
+              class="form-control"
+              id="Contactrel"
+              name="Contactrel"
+              aria-describedby="Contactrel"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="Contactnum1" class="form-label">Contact Number</label>
+            <div><small id="Contactnum1Error" class="text-danger"></small></div>
+
+            <input
+              type="tel"
+              class="form-control"
+              id="Contactnum1"
+              name="Contactnum1"
+              aria-describedby="Contactnum1"
+            />
+          </div>
+        </div>
+        <div class="mb-3 photo">
+          <h2>Pass Photo</h2>
+          <p>Please upload a photo for use on your site pass</p>
+          <button id="upload_widget" class="btn btn-primary" type="button">
+            Choose Photo
+          </button>
+          <div class="photoDiv" id="photoDiv">
+            <img src="./img/photoplaceholder.png" alt="" />
+          </div>
+        </div>
+        <button id="submit" type="submit" class="btn btn-primary">
+          Submit
+        </button>
+      </form>
+    </main>
 
     <script
       src="https://widget.cloudinary.com/v2.0/global/all.js"

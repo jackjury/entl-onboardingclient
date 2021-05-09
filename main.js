@@ -7,22 +7,32 @@ const emailInput = document.getElementById("email");
 
 const submitBtn = document.getElementById("submit");
 
-const COMPANY_END_POINT =
-  "https://entl-onboarding.herokuapp.com/api/v1/companies";
-const PEOPLE_END_POINT = "https://entl-onboarding.herokuapp.com/api/v1/people";
-const VALID_EMAIL_END_POINT =
-  "https://entl-onboarding.herokuapp.com/api/v1/validemail";
+// const COMPANY_END_POINT =
+//   "https://entl-onboarding.herokuapp.com/api/v1/companies";
+// const PEOPLE_END_POINT = "https://entl-onboarding.herokuapp.com/api/v1/people";
+// const VALID_EMAIL_END_POINT =
+//   "https://entl-onboarding.herokuapp.com/api/v1/validemail";
 
-// const COMPANY_END_POINT = "http://localhost:5000/api/v1/companies";
-// const PEOPLE_END_POINT = "http://localhost:5000/api/v1/people";
-// const VALID_EMAIL_END_POINT = "http://localhost:5000/api/v1/validemail";
+const COMPANY_END_POINT = "http://localhost:5000/api/v1/companies";
+const PEOPLE_END_POINT = "http://localhost:5000/api/v1/people";
+const VALID_EMAIL_END_POINT = "http://localhost:5000/api/v1/validemail";
 
 let photourl;
 
 let appData = {
-  form: {},
-  formIsValid: false,
+  fieldIsValid: {
+    email: false,
+    emailIsUnique: false,
+    firstName: false,
+    lastName: false,
+    number: false,
+    company: false,
+    photo: false,
+  },
+  validForm: false,
 };
+
+let nextOfKinFields = ["Contactname", "Contactnum1", "Contactrel"];
 
 let myWidget = cloudinary.createUploadWidget(
   {
@@ -47,9 +57,10 @@ let myWidget = cloudinary.createUploadWidget(
   },
   (error, result) => {
     if (!error && result && result.event === "success") {
-      console.log("Done! Here is the image info: ", result.info);
       photourl = result.info.url;
       addThumbnail(photourl);
+      appData.fieldIsValid.photo = true;
+      appData.validForm = isFormValid();
     }
   }
 );
@@ -71,19 +82,26 @@ function addThumbnail(url) {
 
 submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  const formData = new FormData(signUpForm);
-  const data = Object.fromEntries(formData);
-  data.image_remote_url = photourl;
-  data.company = lookUpID(companySelect.value);
-  console.log(data);
-  axios
-    .post(PEOPLE_END_POINT, data)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+  if (appData.validForm) {
+    const formData = new FormData(signUpForm);
+    const data = Object.fromEntries(formData);
+    data.image_remote_url = photourl;
+    data.company = lookUpID(companySelect.value);
+    console.log(data);
+    axios
+      .post(PEOPLE_END_POINT, data)
+      .then(function (response) {
+        console.log(response);
+        document.getElementById("signUpForm").style.display = "none";
+        document.getElementById("successDiv").style.display = "block";
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  } else {
+    document.getElementById("incompleteForm").style.display = "block";
+    window.scrollTo(0, 0);
+  }
 });
 
 function lookUpID(target) {
@@ -132,8 +150,14 @@ companySelect.addEventListener("change", (e) => {
 
   if (hasEnhanced) {
     nextOfKin.classList.remove("hidden");
+    nextOfKinFields.forEach((field) => {
+      appData.fieldIsValid[field] = false;
+    });
   } else {
     nextOfKin.classList.add("hidden");
+    nextOfKinFields.forEach((field) => {
+      delete appData.fieldIsValid[field];
+    });
   }
 });
 
@@ -155,25 +179,24 @@ const schema = {
 };
 
 document.addEventListener("change", (e) => {
-  // TODO - Add debounce
-  appData.form[e.target.id] = { value: e.target.value }; // Add the value to the app data
   Joi.validate(e.target.value, schema[e.target.id], (error, val) => {
     if (error) {
-      console.log(error);
+      console.log(error + val);
       document.getElementById(`${e.target.id}Error`).innerText = error; // Set errors
-      appData.form[e.target.id].valid = false; // Add error to app data
+      appData.fieldIsValid[e.target.id] = false; // Add error to app data
     } else {
       document.getElementById(`${e.target.id}Error`).innerText = ""; // Clear errors
 
-      appData.form[e.target.id].valid = true; // Add valid to app data
+      appData.fieldIsValid[e.target.id] = true; // Add valid to app data
     }
   }); // Validate with joi
-  console.log(appData.form);
+  appData.validForm = isFormValid();
+  console.log(appData.fieldIsValid);
 });
 
 emailInput.addEventListener("change", (e) => {
   setTimeout(() => {
-    if (appData.form.email.valid) {
+    if (appData.fieldIsValid.email) {
       uniqueEmail(e.target.value.trim().toLowerCase());
     } else {
       document.getElementById("emailInUse").style.display = "none";
@@ -189,13 +212,25 @@ function uniqueEmail(email) {
     .post(VALID_EMAIL_END_POINT, data)
     .then(function (response) {
       if (!response.data.emailIsValid) {
-        console.log("INVAILD");
         document.getElementById("emailInUse").style.display = "block";
+        appData.fieldIsValid.emailIsUnique = false;
       } else {
         document.getElementById("emailInUse").style.display = "none";
+        appData.fieldIsValid.emailIsUnique = true;
       }
     })
     .catch(function (error) {
       console.log(error);
     });
+}
+
+function isFormValid() {
+  for (let field in appData.fieldIsValid) {
+    if (!appData.fieldIsValid[field]) {
+      return false;
+    }
+  }
+  document.getElementById("incompleteForm").style.display = "none";
+
+  return true;
 }
