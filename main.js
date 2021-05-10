@@ -104,6 +104,7 @@ submitBtn.addEventListener("click", (e) => {
         }
       })
       .catch(function (error) {
+        console.log(error);
         document.getElementById("failDiv").style.display = "block";
         window.scrollTo(0, 0);
         submitBtn.removeAttribute("disabled");
