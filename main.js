@@ -83,6 +83,9 @@ function addThumbnail(url) {
 submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
   if (appData.validForm) {
+    submitBtn.setAttribute("disabled", "disabled");
+    document.getElementById("failDiv").style.display = "none";
+
     const formData = new FormData(signUpForm);
     const data = Object.fromEntries(formData);
     data.image_remote_url = photourl;
@@ -91,12 +94,19 @@ submitBtn.addEventListener("click", (e) => {
     axios
       .post(PEOPLE_END_POINT, data)
       .then(function (response) {
-        console.log(response);
-        document.getElementById("signUpForm").style.display = "none";
-        document.getElementById("successDiv").style.display = "block";
+        if (response.data.status == 201) {
+          document.getElementById("signUpForm").style.display = "none";
+          document.getElementById("successDiv").style.display = "block";
+        } else {
+          document.getElementById("failDiv").style.display = "block";
+          window.scrollTo(0, 0);
+          submitBtn.removeAttribute("disabled");
+        }
       })
       .catch(function (error) {
-        console.log(error);
+        document.getElementById("failDiv").style.display = "block";
+        window.scrollTo(0, 0);
+        submitBtn.removeAttribute("disabled");
       });
   } else {
     document.getElementById("incompleteForm").style.display = "block";
