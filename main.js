@@ -7,15 +7,15 @@ const emailInput = document.getElementById("email");
 
 const submitBtn = document.getElementById("submit");
 
-// const COMPANY_END_POINT =
-//   "https://entl-onboarding.herokuapp.com/api/v1/companies";
-// const PEOPLE_END_POINT = "https://entl-onboarding.herokuapp.com/api/v1/people";
-// const VALID_EMAIL_END_POINT =
-//   "https://entl-onboarding.herokuapp.com/api/v1/validemail";
+const COMPANY_END_POINT =
+  "https://entl-onboarding.herokuapp.com/api/v1/companies";
+const PEOPLE_END_POINT = "https://entl-onboarding.herokuapp.com/api/v1/people";
+const VALID_EMAIL_END_POINT =
+  "https://entl-onboarding.herokuapp.com/api/v1/validemail";
 
-const COMPANY_END_POINT = "http://localhost:5000/api/v1/companies";
-const PEOPLE_END_POINT = "http://localhost:5000/api/v1/people";
-const VALID_EMAIL_END_POINT = "http://localhost:5000/api/v1/validemail";
+// const COMPANY_END_POINT = "http://localhost:5000/api/v1/companies";
+// const PEOPLE_END_POINT = "http://localhost:5000/api/v1/people";
+// const VALID_EMAIL_END_POINT = "http://localhost:5000/api/v1/validemail";
 
 let photourl;
 
@@ -104,6 +104,7 @@ submitBtn.addEventListener("click", (e) => {
         }
       })
       .catch(function (error) {
+        console.log(error);
         document.getElementById("failDiv").style.display = "block";
         window.scrollTo(0, 0);
         submitBtn.removeAttribute("disabled");
