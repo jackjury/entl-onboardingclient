@@ -4,18 +4,22 @@ const nextOfKin = document.getElementById("nextOfKin");
 
 const companySelect = document.getElementById("company");
 const emailInput = document.getElementById("email");
+const numberInput = document.getElementById("number");
 
 const submitBtn = document.getElementById("submit");
 
-const COMPANY_END_POINT =
-  "https://entl-onboarding.herokuapp.com/api/v1/companies";
-const PEOPLE_END_POINT = "https://entl-onboarding.herokuapp.com/api/v1/people";
-const VALID_EMAIL_END_POINT =
-  "https://entl-onboarding.herokuapp.com/api/v1/validemail";
+// const COMPANY_END_POINT =
+//   "https://entl-onboarding.herokuapp.com/api/v1/companies";
+// const PEOPLE_END_POINT = "https://entl-onboarding.herokuapp.com/api/v1/people";
+// const VALID_EMAIL_END_POINT =
+//   "https://entl-onboarding.herokuapp.com/api/v1/validemail";
+// const VALID_PHONE_END_POINT =
+//   "https://entl-onboarding.herokuapp.com/api/v1/validphone";
 
-// const COMPANY_END_POINT = "http://localhost:5000/api/v1/companies";
-// const PEOPLE_END_POINT = "http://localhost:5000/api/v1/people";
-// const VALID_EMAIL_END_POINT = "http://localhost:5000/api/v1/validemail";
+const COMPANY_END_POINT = "http://localhost:5000/api/v1/companies";
+const PEOPLE_END_POINT = "http://localhost:5000/api/v1/people";
+const VALID_EMAIL_END_POINT = "http://localhost:5000/api/v1/validemail";
+const VALID_PHONE_END_POINT = "http://localhost:5000/api/v1/validphone";
 
 let photourl;
 
@@ -26,6 +30,7 @@ let appData = {
     firstName: false,
     lastName: false,
     number: false,
+    numberIsUnique: false,
     company: false,
     photo: false,
   },
@@ -215,6 +220,16 @@ emailInput.addEventListener("change", (e) => {
   }, 500); // set Timout is hacky workaround to make sure the global eventlistener has validated the input before we check
 });
 
+numberInput.addEventListener("change", (e) => {
+  setTimeout(() => {
+    if (appData.fieldIsValid.number) {
+      uniqueNumber(e.target.value.trim());
+    } else {
+      document.getElementById("phoneInUse").style.display = "none";
+    }
+  }, 500); // set Timout is hacky workaround to make sure the global eventlistener has validated the input before we check
+});
+
 function uniqueEmail(email) {
   let data = {
     email: email,
@@ -228,6 +243,27 @@ function uniqueEmail(email) {
       } else {
         document.getElementById("emailInUse").style.display = "none";
         appData.fieldIsValid.emailIsUnique = true;
+      }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+}
+
+function uniqueNumber(number) {
+  let data = {
+    number: number,
+  };
+  axios
+    .post(VALID_PHONE_END_POINT, data)
+    .then(function (response) {
+      console.log(response);
+      if (!response.data.numberIsValid) {
+        document.getElementById("phoneInUse").style.display = "block";
+        appData.fieldIsValid.numberIsUnique = false;
+      } else {
+        document.getElementById("phoneInUse").style.display = "none";
+        appData.fieldIsValid.numberIsUnique = true;
       }
     })
     .catch(function (error) {

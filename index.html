@@ -108,7 +108,10 @@
         <div class="mb-3">
           <label for="number" class="form-label">Mobile Number</label>
           <div><small id="numberError" class="text-danger"></small></div>
-
+          <div class="alert alert-danger" id="phoneInUse" style="display: none">
+            <strong>Sorry!</strong> That phone number is allready in use, please
+            use a unique phone number
+          </div>
           <input
             type="tel"
             class="form-control"
